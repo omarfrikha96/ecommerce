@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
-
+import { LinkContainer } from 'react-router-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -13,18 +13,18 @@ function App() {
         <header>
           <Navbar bg="dark" data-bs-theme="dark">
             <Container>
-              <Navbar.Brand href="/">Bi3 w Echri</Navbar.Brand>
+              <LinkContainer to="/">
+                <Navbar.Brand>Bi3 w Echri</Navbar.Brand>
+              </LinkContainer>
               <Nav className="me-auto">
-                <Nav.Link href="#home">Home</Nav.Link>
-                <Nav.Link href="#features">Features</Nav.Link>
-                <Nav.Link href="#pricing">Pricing</Nav.Link>
+                {/* other subtitle */}
               </Nav>
             </Container>
           </Navbar>
         </header>
 
         <main>
-          <Container>
+          <Container className="mt-3">
             <Routes>
               <Route path="/product/:slug" element={<ProductScreen />} />
               <Route path="/" element={<HomeScreen />} />
