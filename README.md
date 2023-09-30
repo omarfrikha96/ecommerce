@@ -1,1 +1,1 @@
-# ecommerce
+# MERN ecommerce site
