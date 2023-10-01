@@ -18,12 +18,6 @@ main {
   color: #000000;
 }
 
-.products {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
 .rating span {
   color: #ffc000;
 }
@@ -43,10 +37,4 @@ img {
   padding: 1rem;
 }
 
-.img-large{
-  max-width: 100%;
-}
 
-.img-thumbnail {
-  height: 80px;
-}
