@@ -1,5 +1,18 @@
 import express from 'express';
 import data from './data.js';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+mongoose
+  .connect(process.env.DB)
+  .then(() => {
+    console.log('connected to db');
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
 
 const app = express();
 
@@ -25,7 +38,7 @@ app.get('/api/products/:id', (req, res) => {
   }
 });
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`serve at http://localhost:${port}`);
 });
