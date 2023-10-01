@@ -6,8 +6,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.site-container{
-  min-height: 100vh ;
+.site-container {
+  min-height: 100vh;
 }
 main {
   flex: 1;
@@ -21,7 +21,6 @@ main {
 .rating span {
   color: #ffc000;
 }
-
 
 .product {
   border: 1px #404040 solid;
@@ -37,4 +36,14 @@ img {
   padding: 1rem;
 }
 
+/* in chechoutSteps */
+.checkout-steps > div {
+  border-bottom: 0.2rem solid #a0a0a0;
+  color: #a0a0a0;
+}
 
+/* in chechoutSteps */
+.checkout-steps > div.active {
+  border-bottom: 0.2rem solid #f08000;
+  color: #f08000;
+}
