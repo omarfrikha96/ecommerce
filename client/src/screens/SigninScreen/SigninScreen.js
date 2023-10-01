@@ -1,28 +1,70 @@
 import './SigninScreen.css';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import axios from 'axios';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { Helmet } from 'react-helmet-async';
+import { Store } from '../../Store';
+import { toast } from 'react-toastify';
+import { getError } from '../../utils';
 
 export default function SigninScreen() {
+  const navigate = useNavigate();
   const { search } = useLocation(); //  search string (query parameters) from the URL (?redirect=${redirect})
   const redirectInUrl = new URLSearchParams(search).get('redirect');
   const redirect = redirectInUrl ? redirectInUrl : '/';
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { userInfo } = state;
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post('/api/users/signin', {
+        email,
+        password,
+      });
+      ctxDispatch({ type: 'USER_SIGNIN', payload: data });
+      localStorage.setItem('userInfo', JSON.stringify(data)); // store info from DB in loaclStrage type string
+      navigate(redirect || '/');
+    } catch (err) {
+      toast.error(getError(err))   //create Alert and bring error from DB
+    }
+  };
+
+  useEffect(() => {  //check the user if it's sign in don't let him sign in again
+    if (userInfo) {
+      navigate(redirect);
+    }
+  }, [navigate, redirect, userInfo]);
+
   return (
     <Container className="small-container">
       <Helmet>
         <title>Sign In</title>
       </Helmet>
       <h1 className="my-3">Sign In</h1>
-      <Form>
+      <Form onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="email">
           <Form.Label>Email</Form.Label>
-          <Form.Control type="email" required />
+          <Form.Control
+            type="email"
+            required
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </Form.Group>
         <Form.Group className="mb-3" controlId="password">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" required />
+          <Form.Control
+            type="password"
+            required
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </Form.Group>
         <div className="mb-3">
           <Button type="submit">Sign In</Button>
