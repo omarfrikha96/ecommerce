@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import { Helmet } from 'react-helmet-async';
 
 export default function SigninScreen() {
-  const { search } = useLocation();
+  const { search } = useLocation(); //  search string (query parameters) from the URL (?redirect=${redirect})
   const redirectInUrl = new URLSearchParams(search).get('redirect');
   const redirect = redirectInUrl ? redirectInUrl : '/';
   return (
