@@ -7,6 +7,7 @@ import HomeScreen from './screens/HomeScreen/HomeScreen';
 import ProductScreen from './screens/ProductScreen/ProductScreen';
 import CartScreen from './screens/CartScreen/CartScreen';
 import SigninScreen from './screens/SigninScreen/SigninScreen';
+import SignupScreen from './screens/SignupScreen/SignupScreen';
 import { Store } from './Store';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -77,6 +78,7 @@ function App() {
               <Route path="/" element={<HomeScreen />} />
               <Route path="/cart" element={<CartScreen />} />
               <Route path="/signin" element={<SigninScreen />} />
+              <Route path="/signup" element={<SignupScreen />} />
               <Route path="/shipping" element={<ShippingAddressScreen />} />
             </Routes>
           </Container>
