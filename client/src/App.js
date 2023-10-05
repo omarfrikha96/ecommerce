@@ -9,7 +9,8 @@ import {
   OrderScreen,
   OrderHistoryScreen,
   ProfileScreen,
-  ShippingAddressScreen
+  ShippingAddressScreen,
+  SearchScreen
 } from './screens/index';
 import {SearchBox} from './components/index';
 import {Badge,Button,Container,NavDropdown,Navbar,Nav} from './Boostraps';
@@ -147,6 +148,8 @@ function App() {
               <Route path="/order/:id" element={<OrderScreen />} />
               <Route path="/orderhistory" element={<OrderHistoryScreen />} />
               <Route path="/profile" element={<ProfileScreen />} />
+              <Route path="/search" element={<SearchScreen />} />
+
             </Routes>
           </Container>
         </main>
