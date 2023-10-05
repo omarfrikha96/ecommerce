@@ -1,17 +1,13 @@
-import axios from 'axios';
+import {LoadingBox,MessageBox} from '../../components/index';
+import { Store } from '../../Store';
+import { getError } from '../../utils';
 import React, { useContext, useEffect, useReducer } from 'react';
+import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import ListGroup from 'react-bootstrap/ListGroup';
-import Card from 'react-bootstrap/Card';
+import {Row,Col,ListGroup,Card} from '../../Boostraps';
 import { Link } from 'react-router-dom';
-import LoadingBox from '../../components/LoadingBox';
-import MessageBox from '../../components/MessageBox';
-import { Store } from '../../Store';
-import { getError } from '../../utils';
 import { toast } from 'react-toastify';
 
 function reducer(state, action) {

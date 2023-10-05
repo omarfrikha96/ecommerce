@@ -1,29 +1,26 @@
+import {
+  HomeScreen,
+  ProductScreen,
+  CartScreen,
+  SigninScreen,
+  SignupScreen,
+  PaymentMethodScreen,
+  PlaceOrderScreen,
+  OrderScreen,
+  OrderHistoryScreen,
+  ProfileScreen,
+  ShippingAddressScreen
+} from './screens/index';
+import {SearchBox} from './components/index';
+import {Badge,Button,Container,NavDropdown,Navbar,Nav} from './Boostraps';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
 import { LinkContainer } from 'react-router-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; //to create alert
-import HomeScreen from './screens/HomeScreen/HomeScreen';
-import ProductScreen from './screens/ProductScreen/ProductScreen';
-import CartScreen from './screens/CartScreen/CartScreen';
-import SigninScreen from './screens/SigninScreen/SigninScreen';
-import SignupScreen from './screens/SignupScreen/SignupScreen';
 import { Store } from './Store';
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import Badge from 'react-bootstrap/esm/Badge';
-import ShippingAddressScreen from './screens/ShippingAdressScreen/ShippingAdressScreen';
-import PaymentMethodScreen from './screens/PaymentMethodScreen/PaymentMethodScreen';
-import PlaceOrderScreen from './screens/PlaceOrderScreen/PlaceOrderScreen';
-import OrderScreen from './screens/OrderScreen/OrderScreen';
-import OrderHistoryScreen from './screens/OrderHistoryScreen/OrderHistoryScreen';
-import ProfileScreen from './screens/ProfileScreen/ProfileScreen';
-import axios from 'axios';
 import { getError } from './utils';
-import SearchBox from './components/SearchBox';
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -76,7 +73,7 @@ function App() {
               </LinkContainer>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
-              <SearchBox />
+                <SearchBox />
                 <Nav className="me-auto w-100 justify-content-end">
                   <Link to="/cart" className="nav-link">
                     Cart

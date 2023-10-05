@@ -1,19 +1,13 @@
+import './ProductScreen.css'
+import {LoadingBox,MessageBox,Rating} from '../../components/index';
+import { getError } from '../../utils';
+import { Store } from '../../Store';
 import axios from 'axios';
 import { useContext, useEffect, useReducer } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import ListGroup from 'react-bootstrap/ListGroup';
-import Rating from '../../components/Rating';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import Badge from 'react-bootstrap/Badge';
-import LoadingBox from '../../components/LoadingBox';
-import MessageBox from '../../components/MessageBox';
-import { getError } from '../../utils';
-import { Store } from '../../Store';
-import './ProductScreen.css'
+import {Row,Col,ListGroup,Card,Button,Badge} from '../../Boostraps';
+
 
 const reducer = (state, action) => {
   switch (action.type) {

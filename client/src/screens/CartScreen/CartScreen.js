@@ -1,15 +1,11 @@
+import './CartScreen.css'
+import {MessageBox} from '../../components/index';
 import { useContext } from 'react';
 import { Store } from '../../Store';
 import { Helmet } from 'react-helmet-async';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import MessageBox from '../../components/MessageBox';
-import ListGroup from 'react-bootstrap/ListGroup';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import {Row,Col,ListGroup,Button,Card} from '../../Boostraps';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './CartScreen.css'
 
 export default function CartScreen() {
   const navigate = useNavigate();

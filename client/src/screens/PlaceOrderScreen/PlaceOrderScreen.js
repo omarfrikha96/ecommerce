@@ -1,15 +1,10 @@
+import {LoadingBox,CheckoutSteps} from '../../components/index';
 import axios from 'axios';
 import React, { useContext, useEffect, useReducer } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import ListGroup from 'react-bootstrap/ListGroup';
+import {Row,Col,ListGroup,Card,Button} from '../../Boostraps';
 import { Store } from '../../Store';
-import CheckoutSteps from '../../components/CheckoutSteps';
-import LoadingBox from '../../components/LoadingBox';
 import { toast } from 'react-toastify';
 import { getError } from '../../utils';
 

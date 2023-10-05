@@ -1,10 +1,10 @@
+import {CheckoutSteps} from '../../components/index';
 import React, { useContext, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import {Form,Button} from '../../Boostraps';
 import { useNavigate } from 'react-router-dom';
 import { Store } from '../../Store';
-import CheckoutSteps from '../../components/CheckoutSteps';
+
 
 export default function ShippingAddressScreen() {
   const navigate = useNavigate();
