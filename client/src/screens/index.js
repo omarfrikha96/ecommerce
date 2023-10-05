@@ -10,4 +10,5 @@ export {default as SearchScreen} from './SearchScreen/SearchScreen'
 export {default as SigninScreen} from './SigninScreen/SigninScreen'
 export {default as SignupScreen} from './SignupScreen/SignupScreen'
 export {default as ShippingAddressScreen} from './ShippingAddressScreen/ShippingAddressScreen'
+export {default as DashboardScreen} from './DashboardScreen/DashboardScreen'
 
