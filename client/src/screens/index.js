@@ -11,4 +11,5 @@ export {default as SigninScreen} from './SigninScreen/SigninScreen'
 export {default as SignupScreen} from './SignupScreen/SignupScreen'
 export {default as ShippingAddressScreen} from './ShippingAddressScreen/ShippingAddressScreen'
 export {default as DashboardScreen} from './DashboardScreen/DashboardScreen'
+export {default as ProductListScreen} from './ProductListScreen/ProductListScreen'
 
