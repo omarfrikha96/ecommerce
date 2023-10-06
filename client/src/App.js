@@ -13,6 +13,8 @@ import {
   SearchScreen,
   DashboardScreen,
   ProductListScreen,
+  ProductEditScreen,
+  ProductCreateScreen
 } from './screens/index';
 import { AdminRoute, ProtectedRoute, SearchBox } from './components/index';
 import {
@@ -209,6 +211,22 @@ function App() {
                 element={
                   <AdminRoute>
                     <ProductListScreen />
+                  </AdminRoute>
+                }
+              />
+                <Route
+                path="/admin/products/create"
+                element={
+                  <AdminRoute>
+                    <ProductCreateScreen />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/product/:id"
+                element={
+                  <AdminRoute>
+                    <ProductEditScreen />
                   </AdminRoute>
                 }
               />
