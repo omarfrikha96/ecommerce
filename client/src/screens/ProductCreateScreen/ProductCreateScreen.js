@@ -110,6 +110,14 @@ export default function ProductCreateScreen() {
     }
     setIsButtonVisible(!isButtonVisible);
   };
+
+  const generateSlug = (input) => {
+    return input
+      .toLowerCase()
+      .replace(/\s+/g, '-')   // Replace spaces with dashes
+      .replace(/[^\w-]+/g, ''); // Remove non-word characters
+  };
+
   return (
     <Container className="small-container">
       <Helmet>
@@ -121,7 +129,10 @@ export default function ProductCreateScreen() {
           <Form.Label>Name</Form.Label>
           <Form.Control
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) =>{
+             setName(e.target.value)
+             setSlug(generateSlug(name))
+             } }
             required
           />
         </Form.Group>
