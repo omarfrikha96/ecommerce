@@ -1,14 +1,33 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useReducer, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Store } from '../../Store';
 import { getError } from '../../utils';
 import { Helmet } from 'react-helmet-async';
+import { LoadingBox } from '../../components/index';
 import { Button, Container, Form } from '../../Boostraps';
 import { toast } from 'react-toastify';
 
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'UPLOAD_REQUEST':
+      return { ...state, loadingUpload: true, errorUpload: '' };
+    case 'UPLOAD_SUCCESS':
+      return {
+        ...state,
+        loadingUpload: false,
+        errorUpload: '',
+      };
+    case 'UPLOAD_FAIL':
+      return { ...state, loadingUpload: false, errorUpload: action.payload };
+    default:
+      return state;
+  }
+};
+
 export default function ProductCreateScreen() {
   const navigate = useNavigate();
+  const [{ loadingUpload }, dispatch] = useReducer(reducer, {});
 
   const { state } = useContext(Store);
   const { userInfo } = state;
@@ -49,6 +68,28 @@ export default function ProductCreateScreen() {
     }
   };
 
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const bodyFormData = new FormData();
+    bodyFormData.append('file', file);
+    try {
+      dispatch({ type: 'UPLOAD_REQUEST' });
+      const { data } = await axios.post('/api/upload', bodyFormData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          authorization: `Bearer ${userInfo.token}`,
+        },
+      });
+      dispatch({ type: 'UPLOAD_SUCCESS' });
+
+      toast.success('Image uploaded successfully');
+      setImage(data.secure_url);
+    } catch (err) {
+      toast.error(getError(err));
+      dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
+    }
+  };
+
   return (
     <Container className="small-container">
       <Helmet>
@@ -80,13 +121,10 @@ export default function ProductCreateScreen() {
             required
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="image">
-          <Form.Label>Image File</Form.Label>
-          <Form.Control
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-            required
-          />
+        <Form.Group className="mb-3" controlId="imageFile">
+          <Form.Label>Upload File</Form.Label>
+          <Form.Control type="file" onChange={uploadFileHandler} />
+          {loadingUpload && <LoadingBox></LoadingBox>}
         </Form.Group>
         <Form.Group className="mb-3" controlId="category">
           <Form.Label>Category</Form.Label>
@@ -121,7 +159,8 @@ export default function ProductCreateScreen() {
           />
         </Form.Group>
         <div className="mb-3">
-          <Button type="submit">Create</Button>
+          <Button type="submit">Create</Button> &nbsp;
+          <Button onClick={() => navigate('/admin/products')}>Cancel</Button>
         </div>
       </Form>
     </Container>
