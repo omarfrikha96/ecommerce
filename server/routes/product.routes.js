@@ -9,6 +9,7 @@ productRouter.get('/', async (req, res) => {
   const products = await Product.find();
   res.send(products);
 });
+
 //edit product
 productRouter.put(
   '/:id',
@@ -22,6 +23,7 @@ productRouter.put(
       product.slug = req.body.slug;
       product.price = req.body.price;
       product.image = req.body.image;
+      product.images = req.body.images;
       product.category = req.body.category;
       product.brand = req.body.brand;
       product.countInStock = req.body.countInStock;
@@ -44,6 +46,7 @@ productRouter.post(
       name: req.body.name,
       slug: req.body.slug,
       image: req.body.image,
+      images : req.body.images,
       price: req.body.price,
       category: req.body.category,
       brand: req.body.brand,

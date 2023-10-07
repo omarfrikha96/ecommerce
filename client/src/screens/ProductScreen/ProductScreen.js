@@ -3,7 +3,7 @@ import {LoadingBox,MessageBox,Rating} from '../../components/index';
 import { getError } from '../../utils';
 import { Store } from '../../Store';
 import axios from 'axios';
-import { useContext, useEffect, useReducer } from 'react';
+import { useContext, useEffect, useReducer, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import {Row,Col,ListGroup,Card,Button,Badge} from '../../Boostraps';
@@ -25,6 +25,7 @@ const reducer = (state, action) => {
 const ProductScreen = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const [selectedImage, setSelectedImage] = useState('');
 
   const [{ loading, error, product }, dispatch] = useReducer(reducer, {
     product: [],
@@ -73,7 +74,7 @@ const ProductScreen = () => {
         <Col md={6}>
           <img
             className="img-large"
-            src={product.image}
+            src={selectedImage || product.image}
             alt={product.name}
           ></img>
         </Col>
@@ -92,6 +93,24 @@ const ProductScreen = () => {
               ></Rating>
             </ListGroup.Item>
             <ListGroup.Item>Price : ${product.price}</ListGroup.Item>
+            <ListGroup.Item>
+              <Row xs={4} md={3}>
+                {[product.image, ...product.images].map((x) => (
+                  <Col key={x} className='mt-1'>
+                    <Card>
+                      <Button
+                        className="thumbnail"
+                        type="button"
+                        variant="light"
+                        onClick={() => setSelectedImage(x)}
+                      >
+                        <Card.Img variant="top" src={x} alt="product" />
+                      </Button>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            </ListGroup.Item>
             <ListGroup.Item>
               Description:
               <p>{product.description}</p>

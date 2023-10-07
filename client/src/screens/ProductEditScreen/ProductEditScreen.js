@@ -5,7 +5,7 @@ import { Store } from '../../Store';
 import { getError } from '../../utils';
 import { Helmet } from 'react-helmet-async';
 import { MessageBox, LoadingBox } from '../../components/index';
-import { Button, Container, Form } from '../../Boostraps';
+import { Button, Container, Form, ListGroup } from '../../Boostraps';
 import { toast } from 'react-toastify';
 
 const reducer = (state, action) => {
@@ -53,6 +53,7 @@ export default function ProductEditScreen() {
   const [slug, setSlug] = useState('');
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
+  const [images, setImages] = useState([]);
   const [category, setCategory] = useState('');
   const [countInStock, setCountInStock] = useState('');
   const [brand, setBrand] = useState('');
@@ -67,6 +68,7 @@ export default function ProductEditScreen() {
         setSlug(data.slug);
         setPrice(data.price);
         setImage(data.image);
+        setImages(data.images);
         setCategory(data.category);
         setCountInStock(data.countInStock);
         setBrand(data.brand);
@@ -94,6 +96,7 @@ export default function ProductEditScreen() {
           slug,
           price,
           image,
+          images,
           category,
           brand,
           countInStock,
@@ -114,7 +117,7 @@ export default function ProductEditScreen() {
     }
   };
 
-  const uploadFileHandler = async (e) => {
+  const uploadFileHandler = async (e, forImages) => {
     const file = e.target.files[0];
     const bodyFormData = new FormData();
     bodyFormData.append('file', file);
@@ -127,14 +130,35 @@ export default function ProductEditScreen() {
         },
       });
       dispatch({ type: 'UPLOAD_SUCCESS' });
-
-      toast.success('Image uploaded successfully');
-      setImage(data.secure_url);
+      if (forImages) {
+        setImages([...images, data.secure_url]);
+      } else {
+        setImage(data.secure_url);
+      }
+      toast.success('Image uploaded successfully. click Update to apply it');
     } catch (err) {
       toast.error(getError(err));
       dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
     }
   };
+
+  const deleteFileHandler = async (fileName, f) => {
+    console.log(fileName, f);
+    console.log(images);
+    console.log(images.filter((x) => x !== fileName));
+    setImages(images.filter((x) => x !== fileName));
+    toast.success('Image removed successfully. click Update to apply it');
+  };
+
+  const [isButtonVisible, setIsButtonVisible] = useState(true);
+  const deleteFileHandlerImg = async (fileName) => {
+    if (image === fileName) {
+      setImage(null); // Assuming you want to set it to null after deletion
+      toast.success('Image removed successfully. Add another image');
+    }
+    setIsButtonVisible(!isButtonVisible);
+  };
+
   return (
     <Container className="small-container">
       <Helmet>
@@ -173,22 +197,63 @@ export default function ProductEditScreen() {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="imageFile">
-            <Form.Label>Upload File</Form.Label>
+            <Form.Label>Upload Image</Form.Label>
             <Form.Control type="file" onChange={uploadFileHandler} />
             {loadingUpload && <LoadingBox></LoadingBox>}
+            <div>
+            {image === '' ? (
+              <MessageBox>No image</MessageBox>
+            ) : (
+              <>
+                {image}
+                {isButtonVisible && (<Button
+                  variant="light"
+                  onClick={() => deleteFileHandlerImg(image)}
+                >
+                  <i className="fa fa-times-circle"></i>
+                </Button>)}
+              </>
+            )}
+          </div>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="additionalImageFile">
+            <Form.Label>Upload Aditional Images</Form.Label>
+            <Form.Control
+              type="file"
+              onChange={(e) => uploadFileHandler(e, true)}
+            />
+            {loadingUpload && <LoadingBox></LoadingBox>}
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="additionalImage">
+            {images.length === 0 && <MessageBox>No image</MessageBox>}
+            <ListGroup variant="flush">
+              {images.map((x) => (
+                <ListGroup.Item key={x}>
+                  {x}
+                  <Button variant="light" onClick={() => deleteFileHandler(x)}>
+                    <i className="fa fa-times-circle"></i>
+                  </Button>
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
           </Form.Group>
           <Form.Group className="mb-3" controlId="category">
             <Form.Label>Category</Form.Label>
-            <Form.Select aria-label="Default select example"  required  value={category} onChange={(e) => setCategory(e.target.value)}>
-            <option>Open this select menu</option>
-            <option value="shirt">Shirt</option>
-            <option value="pants">Pants</option>
-            <option value="shorts">Shorts</option>
-            <option value="costume">Costume</option>
-            <option value="shoes">Shoes</option>
-            <option value="watch">Watch</option>
-            <option value="parfums">Parfums</option>
-          </Form.Select>
+            <Form.Select
+              aria-label="Default select example"
+              required
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option>Open this select menu</option>
+              <option value="shirt">Shirt</option>
+              <option value="pants">Pants</option>
+              <option value="shorts">Shorts</option>
+              <option value="costume">Costume</option>
+              <option value="shoes">Shoes</option>
+              <option value="watch">Watch</option>
+              <option value="parfums">Parfums</option>
+            </Form.Select>
           </Form.Group>
           <Form.Group className="mb-3" controlId="brand">
             <Form.Label>Brand</Form.Label>
@@ -209,6 +274,7 @@ export default function ProductEditScreen() {
           <Form.Group className="mb-3" controlId="description">
             <Form.Label>Description</Form.Label>
             <Form.Control
+              as="textarea"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
