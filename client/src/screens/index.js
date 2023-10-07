@@ -15,3 +15,5 @@ export {default as ProductListScreen} from './ProductListScreen/ProductListScree
 export {default as ProductEditScreen} from './ProductEditScreen/ProductEditScreen'
 export {default as ProductCreateScreen} from './ProductCreateScreen/ProductCreateScreen'
 export {default as OrderListScreen} from './OrderListScreen/OrderListScreen'
+export {default as UserListScreen} from './UserListScreen/UserListScreen'  
+export {default as UserEditScreen} from './UserEditScreen/UserEditScreen'

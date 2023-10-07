@@ -15,6 +15,7 @@ export default function SignupScreen() {
   const redirect = redirectInUrl ? redirectInUrl : '/';
 
   const [name, setName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -30,6 +31,7 @@ export default function SignupScreen() {
     try {
       const { data } = await axios.post('/api/users/signup', {
         name,
+        lastName,
         email,
         password,
       });
@@ -55,10 +57,13 @@ export default function SignupScreen() {
       <h1 className="my-3">Sign Up</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="name">
-          <Form.Label>Name</Form.Label>
+          <Form.Label>First Name</Form.Label>
           <Form.Control onChange={(e) => setName(e.target.value)} required />
         </Form.Group>
-
+        <Form.Group className="mb-3" controlId="name">
+          <Form.Label>Last Name</Form.Label>
+          <Form.Control onChange={(e) => setLastName(e.target.value)} required />
+        </Form.Group>
         <Form.Group className="mb-3" controlId="email">
           <Form.Label>Email</Form.Label>
           <Form.Control

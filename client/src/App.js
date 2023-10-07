@@ -16,6 +16,8 @@ import {
   ProductEditScreen,
   ProductCreateScreen,
   OrderListScreen,
+  UserListScreen,
+  UserEditScreen,
 } from './screens/index';
 import { AdminRoute, ProtectedRoute, SearchBox } from './components/index';
 import {
@@ -97,7 +99,12 @@ function App() {
                     )}
                   </Link>
                   {userInfo ? (
-                    <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
+                    <NavDropdown
+                      title={
+                        userInfo.name[0].toUpperCase() + userInfo.name.slice(1)
+                      }
+                      id="basic-nav-dropdown"
+                    >
                       <LinkContainer to="/profile">
                         <NavDropdown.Item>User Profile</NavDropdown.Item>
                       </LinkContainer>
@@ -238,7 +245,23 @@ function App() {
                     <OrderListScreen />
                   </AdminRoute>
                 }
-              ></Route>
+              />
+              <Route
+                path="/admin/users"
+                element={
+                  <AdminRoute>
+                    <UserListScreen />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/user/:id"
+                element={
+                  <AdminRoute>
+                    <UserEditScreen />
+                  </AdminRoute>
+                }
+              />
             </Routes>
           </Container>
         </main>

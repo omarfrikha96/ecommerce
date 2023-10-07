@@ -1,6 +1,7 @@
 import React, { useContext, useReducer, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import {Form,Button} from '../../Boostraps';
+import { Form, Button } from '../../Boostraps';
 import { Store } from '../../Store';
 import { toast } from 'react-toastify';
 import { getError } from '../../utils';
@@ -21,9 +22,11 @@ const reducer = (state, action) => {
 };
 
 export default function ProfileScreen() {
+  let { id } = useParams();
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
   const [name, setName] = useState(userInfo.name);
+  const [lastName, setLastName] = useState(userInfo.lastName);
   const [email, setEmail] = useState(userInfo.email);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -35,14 +38,15 @@ export default function ProfileScreen() {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-        toast.error('Passwords do not match');
-        return;
-        }
+      toast.error('Passwords do not match');
+      return;
+    }
     try {
       const { data } = await axios.put(
-        '/api/users/profile',
+        `/api/users/profile/${id}`,
         {
           name,
+          lastName,
           email,
           password,
         },
@@ -56,8 +60,8 @@ export default function ProfileScreen() {
       ctxDispatch({ type: 'USER_SIGNIN', payload: data });
       localStorage.setItem('userInfo', JSON.stringify(data));
       toast.success('User updated successfully');
-      setPassword('')
-      setConfirmPassword('')
+      setPassword('');
+      setConfirmPassword('');
     } catch (err) {
       dispatch({
         type: 'FETCH_FAIL',
@@ -74,10 +78,18 @@ export default function ProfileScreen() {
       <h1 className="my-3">User Profile</h1>
       <form onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="name">
-          <Form.Label>Name</Form.Label>
+          <Form.Label>First Name</Form.Label>
           <Form.Control
             value={name}
             onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="name">
+          <Form.Label>Last Name</Form.Label>
+          <Form.Control
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
             required
           />
         </Form.Group>
