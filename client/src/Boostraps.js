@@ -9,4 +9,4 @@ export {default as Col}  from 'react-bootstrap/Col';
 export {default as ListGroup}  from 'react-bootstrap/ListGroup';
 export {default as Card}  from 'react-bootstrap/Card';
 export {default as Form}  from 'react-bootstrap/Form';
-
+export {default as FloatingLabel} from 'react-bootstrap/FloatingLabel';
