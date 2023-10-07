@@ -6,7 +6,18 @@ import User from '../models/user.model.js';
 import { isAdmin, isAuth } from '../utils.js';
 
 const orderRouter = express.Router();
-//order list  
+//order list for admin
+orderRouter.get(
+  '/',
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const orders = await Order.find().populate('user', 'name');
+    res.send(orders);
+  })
+);
+
+//order list
 orderRouter.post(
   '/',
   isAuth,
@@ -19,7 +30,7 @@ orderRouter.post(
       shippingPrice: req.body.shippingPrice,
       taxPrice: req.body.taxPrice,
       totalPrice: req.body.totalPrice,
-      user: req.user._id,  //come from isAuth from utils.js
+      user: req.user._id, //come from isAuth from utils.js
     });
 
     const order = await newOrder.save();
@@ -81,7 +92,6 @@ orderRouter.get(
   })
 );
 
-
 orderRouter.get(
   '/:id',
   isAuth,
@@ -89,6 +99,22 @@ orderRouter.get(
     const order = await Order.findById(req.params.id);
     if (order) {
       res.send(order);
+    } else {
+      res.status(404).send({ message: 'Order Not Found' });
+    }
+  })
+);
+//order delivery
+orderRouter.put(
+  '/:id/deliver',
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+      order.isDelivered = true;
+      order.deliveredAt = Date.now();
+      await order.save();
+      res.send({ message: 'Order Delivered' });
     } else {
       res.status(404).send({ message: 'Order Not Found' });
     }
@@ -118,4 +144,20 @@ orderRouter.put(
     }
   })
 );
+//order delete
+orderRouter.delete(
+  '/:id',
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+      await order.deleteOne();
+      res.send({ message: 'Order Deleted' });
+    } else {
+      res.status(404).send({ message: 'Order Not Found' });
+    }
+  })
+);
+
 export default orderRouter;

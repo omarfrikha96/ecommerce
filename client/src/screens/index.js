@@ -14,4 +14,4 @@ export {default as DashboardScreen} from './DashboardScreen/DashboardScreen'
 export {default as ProductListScreen} from './ProductListScreen/ProductListScreen'
 export {default as ProductEditScreen} from './ProductEditScreen/ProductEditScreen'
 export {default as ProductCreateScreen} from './ProductCreateScreen/ProductCreateScreen'
-
+export {default as OrderListScreen} from './OrderListScreen/OrderListScreen'

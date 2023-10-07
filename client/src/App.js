@@ -14,7 +14,8 @@ import {
   DashboardScreen,
   ProductListScreen,
   ProductEditScreen,
-  ProductCreateScreen
+  ProductCreateScreen,
+  OrderListScreen,
 } from './screens/index';
 import { AdminRoute, ProtectedRoute, SearchBox } from './components/index';
 import {
@@ -214,7 +215,7 @@ function App() {
                   </AdminRoute>
                 }
               />
-                <Route
+              <Route
                 path="/admin/products/create"
                 element={
                   <AdminRoute>
@@ -230,6 +231,14 @@ function App() {
                   </AdminRoute>
                 }
               />
+              <Route
+                path="/admin/orders"
+                element={
+                  <AdminRoute>
+                    <OrderListScreen />
+                  </AdminRoute>
+                }
+              ></Route>
             </Routes>
           </Container>
         </main>

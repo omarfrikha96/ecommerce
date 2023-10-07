@@ -128,11 +128,16 @@ export default function ProductCreateScreen() {
         </Form.Group>
         <Form.Group className="mb-3" controlId="category">
           <Form.Label>Category</Form.Label>
-          <Form.Control
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            required
-          />
+           <Form.Select aria-label="Default select example"  required  value={category} onChange={(e) => setCategory(e.target.value)}>
+            <option>Open this select menu</option>
+            <option value="shirt">Shirt</option>
+            <option value="pants">Pants</option>
+            <option value="shorts">Shorts</option>
+            <option value="costume">Costume</option>
+            <option value="shoes">Shoes</option>
+            <option value="watch">Watch</option>
+            <option value="parfums">Parfums</option>
+          </Form.Select>
         </Form.Group>
         <Form.Group className="mb-3" controlId="brand">
           <Form.Label>Brand</Form.Label>
