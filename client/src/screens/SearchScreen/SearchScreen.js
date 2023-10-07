@@ -1,5 +1,5 @@
 import axios from 'axios';
-import './SearchScreen.css'
+import './SearchScreen.css';
 import { Button, Col, Row } from '../../Boostraps';
 import {
   LoadingBox,
@@ -12,7 +12,6 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { getError } from '../../utils';
 import { toast } from 'react-toastify';
 import { Helmet } from 'react-helmet-async';
-
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -120,14 +119,14 @@ const SearchScreen = () => {
     fetchCategories();
   }, [dispatch]);
 
-  const getFilterUrl = (filter) => {
+  const getFilterUrl = (filter, skipPathname) => {
     const filterPage = filter.page || page;
     const filterCategory = filter.category || category;
     const filterQuery = filter.query || query;
     const filterRating = filter.rating || rating;
     const filterPrice = filter.price || price;
     const sortOrder = filter.order || order;
-    return `/search?category=${filterCategory}&query=${filterQuery}&price=${filterPrice}&rating=${filterRating}&order=${sortOrder}&page=${filterPage}`;
+    return `${skipPathname ? '' : '/search?'}category=${filterCategory}&query=${filterQuery}&price=${filterPrice}&rating=${filterRating}&order=${sortOrder}&page=${filterPage}`;
   };
   return (
     <div>
@@ -266,7 +265,10 @@ const SearchScreen = () => {
                   <Link
                     key={x + 1}
                     className="mx-1"
-                    to={getFilterUrl({ page: x + 1 })}
+                    to={{
+                      pathname: '/search',
+                      seacrh: getFilterUrl({ page: x + 1 }, true),
+                    }}
                   >
                     <Button
                       className={Number(page) === x + 1 ? 'text-bold' : ''}
