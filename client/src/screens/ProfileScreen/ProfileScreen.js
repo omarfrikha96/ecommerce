@@ -1,5 +1,4 @@
 import React, { useContext, useReducer, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Form, Button } from '../../Boostraps';
 import { Store } from '../../Store';
@@ -22,7 +21,6 @@ const reducer = (state, action) => {
 };
 
 export default function ProfileScreen() {
-  let { id } = useParams();
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
   const [name, setName] = useState(userInfo.name);
@@ -43,7 +41,7 @@ export default function ProfileScreen() {
     }
     try {
       const { data } = await axios.put(
-        `/api/users/profile/${id}`,
+        `/api/users/profile/`,
         {
           name,
           lastName,
